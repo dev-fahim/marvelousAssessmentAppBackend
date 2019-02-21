@@ -1,8 +1,19 @@
 import datetime
-import os
 from project.core.keys import private_key, public_key
+from project.project_defination import DEBUG, SECRET_KEY, USE_PRIVATE_KEY_BASE_JWT, JWT_ENCRYPTION_ALGORITHM
+
 
 """ REST FRAMEWORK SETTINGS """
+
+if DEBUG:
+    DEFAULT_RENDERER_CLASSES = (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
+else:
+    DEFAULT_RENDERER_CLASSES = (
+        'rest_framework.renderers.JSONRenderer',
+    )
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
@@ -13,6 +24,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
+    'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES
 }
 
 JWT_AUTH = {
@@ -31,11 +43,11 @@ JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER':
     'rest_framework_jwt.utils.jwt_response_payload_handler',
 
-    'JWT_SECRET_KEY': os.environ.get('SECRET_KEY'),
+    'JWT_SECRET_KEY': SECRET_KEY,
     'JWT_GET_USER_SECRET_KEY': None,
-    'JWT_PUBLIC_KEY': public_key,
-    'JWT_PRIVATE_KEY': private_key,
-    'JWT_ALGORITHM': 'RS256',
+    'JWT_PUBLIC_KEY': public_key if USE_PRIVATE_KEY_BASE_JWT else None,
+    'JWT_PRIVATE_KEY': private_key if USE_PRIVATE_KEY_BASE_JWT else None,
+    'JWT_ALGORITHM': JWT_ENCRYPTION_ALGORITHM,
     'JWT_VERIFY': True,
     'JWT_VERIFY_EXPIRATION': True,
     'JWT_LEEWAY': 0,
