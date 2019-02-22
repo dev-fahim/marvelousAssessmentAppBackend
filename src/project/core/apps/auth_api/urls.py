@@ -1,5 +1,5 @@
 from django.urls import path
-from project.core.auth.views import Login
+from project.core.apps.auth_api.views import Login
 
 app_name = "core"
 

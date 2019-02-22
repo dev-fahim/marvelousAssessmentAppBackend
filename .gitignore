@@ -8,6 +8,8 @@ __pycache__/
 *.idea/
 *.idea*/
 *.idea*
+src/statics/admin/
+src/statics/rest_framework/
 
 # C extensions
 *.so

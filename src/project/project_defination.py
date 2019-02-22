@@ -1,4 +1,7 @@
 import os
+from django.contrib.messages import constants as message_constants
+from django.contrib import messages
+from django.urls import reverse_lazy
 from project.core.keys import SECRET_KEY
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,6 +29,17 @@ ROOT_URLCONF = 'project.urls'
 
 WSGI_APPLICATION = 'project.wsgi.application'
 
+LOGIN_URL = reverse_lazy("auth:login_view") if DEBUG else reverse_lazy("core:login")
+
+MESSAGE_LEVEL = message_constants.DEBUG
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/

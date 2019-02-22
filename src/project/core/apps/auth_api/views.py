@@ -5,7 +5,7 @@ from rest_framework_jwt.settings import api_settings
 from rest_framework.permissions import AllowAny
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth import authenticate, get_user_model
-from project.core.auth.serializers import LoginSerializer
+from project.core.apps.auth_api.serializers import LoginSerializer
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER

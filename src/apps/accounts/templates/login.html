@@ -1,0 +1,34 @@
+{% extends 'base_template.html' %}
+{% block title %}Login to your account{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center" style="height: 500px">
+        <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12">
+            <h3 class="text-center card-title mb-4">Sign in to Application</h3>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert {{ message.tags }}" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+            {{ message }}
+            {% endif %}
+            <div class="card shadow-sm">
+                <div class="card-body">
+                <form action="{% url 'auth:login_view' %}" method="POST">
+                    {% csrf_token %}
+                    <label for="username" class="font-weight-bold">Username</label>
+                    <input type="text" class="form-control mb-2 shadow-sm" name="username" id="username" value="{{ username }}">
+                    <label for="password" class="font-weight-bold">Password</label>
+                    <input type="password" class="form-control shadow-sm" name="password" id="password" value="{{ password }}">
+                    <button class="btn btn-block btn-primary mt-4 font-weight-bold border border-dark">Login</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

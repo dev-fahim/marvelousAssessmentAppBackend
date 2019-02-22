@@ -6,10 +6,10 @@ import os
 
 STATIC_URL = '/static/'
 
-if DEBUG:
+if DEBUG is False:
     STATIC_ROOT = os.path.join(BASE_DIR, 'statics')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 else:
-    STATICFILES_STORAGE = [
+    STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'statics')
     ]

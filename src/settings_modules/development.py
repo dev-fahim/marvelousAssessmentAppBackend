@@ -18,16 +18,6 @@ from project.core.settings.password_validator import AUTH_PASSWORD_VALIDATORS
 from project.core.settings.password_hasher import PASSWORD_HASHERS
 from project.core.settings.static import *
 
-
-# Build paths inside the src like this: os.path.join(BASE_DIR, ...)
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-
-
 # Application definition
 
 INSTALLED_APPS = INSTALLED_APPS
