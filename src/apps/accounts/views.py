@@ -8,7 +8,7 @@ from django.contrib import messages
 # Create your views here.
 
 
-def login_view(request):
+def login_view(request, template_name="login.html"):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -20,10 +20,10 @@ def login_view(request):
                 login(request, user)
                 return HttpResponseRedirect(reverse('home:index'))
             messages.warning(request, 'Your are not an active user.')
-            return render(request, 'login.html', {'username': username, 'password': password})
+            return render(request, template_name, {'username': username, 'password': password})
         messages.error(request, 'Invalid username or password.')
-        return render(request, 'login.html', {'username': username, 'password': password})
-    return render(request, 'login.html', {'username': '', 'password': ''})
+        return render(request, template_name, {'username': username, 'password': password})
+    return render(request, template_name, {'username': '', 'password': ''})
 
 
 @login_required

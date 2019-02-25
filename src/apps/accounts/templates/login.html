@@ -21,10 +21,10 @@
                 <form action="{% url 'auth:login_view' %}" method="POST">
                     {% csrf_token %}
                     <label for="username" class="font-weight-bold">Username</label>
-                    <input type="text" class="form-control mb-2 shadow-sm" name="username" id="username" value="{{ username }}">
+                    <input type="text" class="form-control form-control-sm mb-2" name="username" id="username" value="{{ username }}">
                     <label for="password" class="font-weight-bold">Password</label>
-                    <input type="password" class="form-control shadow-sm" name="password" id="password" value="{{ password }}">
-                    <button class="btn btn-block btn-primary mt-4 font-weight-bold border border-dark">Login</button>
+                    <input type="password" class="form-control form-control-sm" name="password" id="password" value="{{ password }}">
+                    <button class="btn btn-block btn-sm btn-primary mt-4 font-weight-bold border border-dark">Login</button>
                 </form>
                 </div>
             </div>

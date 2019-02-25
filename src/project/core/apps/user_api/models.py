@@ -4,8 +4,18 @@ from django.contrib.auth import get_user_model
 # Create your models here.
 
 
+class UserType(models.Model):
+    user = models.OneToOneField(to=get_user_model(), on_delete=models.CASCADE, related_name='user_type')
+
+    is_main_user = models.BooleanField()
+    is_admin_user = models.BooleanField()
+    is_manager_user = models.BooleanField()
+    is_store_keeper_user = models.BooleanField()
+
+
 class MainUser(models.Model):
     DISCOUNT_VALUES = (
+        (0, '0%'),
         (5, '5%'),
         (7, '7%'),
         (12, '12%'),
@@ -32,14 +42,22 @@ class MainUser(models.Model):
     expire_date = models.DateField(auto_now_add=True)
 
 
+class AdminUser(models.Model):
+    user = models.OneToOneField(to=get_user_model(), on_delete=models.CASCADE, related_name="admin_user")
+
+    main_user = models.ForeignKey(to=MainUser, on_delete=models.CASCADE, related_name="admin_users")
+
+
 class ManagerUser(models.Model):
     user = models.OneToOneField(to=get_user_model(), on_delete=models.CASCADE, related_name="manager_user")
 
     main_user = models.ForeignKey(to=MainUser, on_delete=models.CASCADE, related_name="manager_users")
+    admin_user = models.ForeignKey(to=AdminUser, on_delete=models.CASCADE, related_name="manager_users")
 
 
 class StoreKeeperUser(models.Model):
     user = models.OneToOneField(to=get_user_model(), on_delete=models.CASCADE, related_name="store_user")
 
     main_user = models.ForeignKey(to=MainUser, on_delete=models.CASCADE, related_name="store_users")
+    admin_user = models.ForeignKey(to=AdminUser, on_delete=models.CASCADE, related_name="store_users")
     manager_user = models.ForeignKey(to=ManagerUser, on_delete=models.CASCADE, related_name="store_users")
