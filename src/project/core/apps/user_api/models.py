@@ -12,6 +12,17 @@ class UserType(models.Model):
     is_manager_user = models.BooleanField()
     is_store_keeper_user = models.BooleanField()
 
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.user.__str__()
+
+
+class MainUserManager(models.Manager):
+
+    def get_client_model(self, request):
+        return super().get_queryset().get(user_id=request.user.id)
+
 
 class MainUser(models.Model):
     DISCOUNT_VALUES = (
@@ -41,11 +52,41 @@ class MainUser(models.Model):
 
     expire_date = models.DateField(auto_now_add=True)
 
+    objects = models.Manager()
+    client = MainUserManager()
+
+    def __str__(self):
+        return self.user.__str__()
+
+
+class AdminUserManager(models.Manager):
+
+    def get_admin_main_user_model(self, request):
+        return super().get_queryset().get(user_id=request.user.id).main_user
+
+    def get_client_model(self, request):
+        return super().get_queryset().get(user_id=request.user.id)
+
 
 class AdminUser(models.Model):
     user = models.OneToOneField(to=get_user_model(), on_delete=models.CASCADE, related_name="admin_user")
 
     main_user = models.ForeignKey(to=MainUser, on_delete=models.CASCADE, related_name="admin_users")
+
+    objects = models.Manager()
+    client = AdminUserManager()
+
+    def __str__(self):
+        return self.user.__str__()
+
+
+class ManagerUserManager(models.Manager):
+
+    def get_manager_main_user_model(self, request):
+        return super().get_queryset().get(user_id=request.user.id).main_user
+
+    def get_client_model(self, request):
+        return super().get_queryset().get(user_id=request.user.id)
 
 
 class ManagerUser(models.Model):
@@ -54,6 +95,21 @@ class ManagerUser(models.Model):
     main_user = models.ForeignKey(to=MainUser, on_delete=models.CASCADE, related_name="manager_users")
     admin_user = models.ForeignKey(to=AdminUser, on_delete=models.CASCADE, related_name="manager_users")
 
+    objects = models.Manager()
+    client = ManagerUserManager()
+
+    def __str__(self):
+        return self.user.__str__()
+
+
+class StoreKeeperUserManager(models.Manager):
+
+    def get_store_keeper_main_user_model(self, request):
+        return super().get_queryset().get(user_id=request.user.id).main_user
+
+    def get_client_model(self, request):
+        return super().get_queryset().get(user_id=request.user.id)
+
 
 class StoreKeeperUser(models.Model):
     user = models.OneToOneField(to=get_user_model(), on_delete=models.CASCADE, related_name="store_user")
@@ -61,3 +117,9 @@ class StoreKeeperUser(models.Model):
     main_user = models.ForeignKey(to=MainUser, on_delete=models.CASCADE, related_name="store_users")
     admin_user = models.ForeignKey(to=AdminUser, on_delete=models.CASCADE, related_name="store_users")
     manager_user = models.ForeignKey(to=ManagerUser, on_delete=models.CASCADE, related_name="store_users")
+
+    objects = models.Manager()
+    client = StoreKeeperUserManager()
+
+    def __str__(self):
+        return self.user.__str__()

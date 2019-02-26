@@ -14,9 +14,9 @@ class Inventory(models.Model):
 
     description = models.TextField()
 
+    managers = models.ManyToManyField(to=ManagerUser, related_name='inventories')
 
-class InventoryManagerConnectionBridge(models.Model):
-    main_user = models.ForeignKey(to=MainUser, on_delete=models.CASCADE, related_name='inventory_connections')
+    objects = models.Manager()
 
-    inventory = models.ForeignKey(to=Inventory, on_delete=models.CASCADE, related_name='managers')
-    manager = models.ForeignKey(to=ManagerUser, on_delete=models.CASCADE, related_name='inventories')
+    def __str__(self):
+        return self.name

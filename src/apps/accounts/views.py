@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponsePermanentRedirect
 from django.shortcuts import reverse
 from django.contrib import messages
 
@@ -18,7 +18,7 @@ def login_view(request, template_name="login.html"):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('home:index'))
+                return HttpResponsePermanentRedirect(reverse('home:index'))
             messages.warning(request, 'Your are not an active user.')
             return render(request, template_name, {'username': username, 'password': password})
         messages.error(request, 'Invalid username or password.')
@@ -29,4 +29,4 @@ def login_view(request, template_name="login.html"):
 @login_required
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("auth:login_view"))
+    return HttpResponsePermanentRedirect(reverse("auth:login_view"))

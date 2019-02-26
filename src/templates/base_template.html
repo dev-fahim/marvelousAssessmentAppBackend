@@ -18,11 +18,15 @@
     <h1>Hello, world!</h1>
 
     {% endblock %}
-    {% block javascript %}
-    {% endblock %}
 
-    <script src="{% static 'project/js/jquery.slim.min.js' %}" ></script>
+    <script src="{% static 'project/js/jquery-3.3.1.min.js' %}" ></script>
     <script src="{% static 'project/js/popper.min.js' %}" ></script>
     <script src="{% static 'project/js/bootstrap.min.js' %}" ></script>
+    <script src="{% static 'project/js/script.js' %}" ></script>
+
+    <script>
+    {% block javascript %}
+    {% endblock %}
+    </script>
   </body>
 </html>
